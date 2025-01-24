@@ -1,0 +1,59 @@
+local wezterm = require("wezterm")
+local config = wezterm.config_builder()
+local act = wezterm.action
+
+config.color_scheme = "tokyonight_night"
+config.font = wezterm.font("Fira Code")
+-- You can specify some parameters to influence the font selection;
+-- for example, this selects a Bold, Italic font variant.
+config.font = wezterm.font("FiraCode Nerd Font")
+config.font_size = 16.0
+config.line_height = 1.3
+
+-- tab bar
+--config.enable_tab_bar = false
+config.hide_tab_bar_if_only_one_tab = false
+config.tab_bar_at_bottom = true
+config.use_fancy_tab_bar = false
+--config.tab_and_split_indices_are_zero_based = true
+
+--config.window_decorations = "RESIZE"
+config.window_decorations = "RESIZE|INTEGRATED_BUTTONS"
+config.window_padding = { left = "0.5cell", right = "0.5cell", top = "1cell", bottom = "0.5cell" }
+--config.window_background_opacity = 0.75
+--config.macos_window_background_blur = 10
+wezterm.on("gui-startup", function(cmd)
+	local active = wezterm.gui.screens().active
+	local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
+	window:gui_window():set_position(active.x, active.y)
+	window:gui_window():set_inner_size(active.width, active.height)
+end)
+config.keys = {
+	{ key = "LeftArrow", mods = "OPT", action = act.SendKey({ key = "b", mods = "ALT" }) },
+	{ key = "RightArrow", mods = "OPT", action = act.SendKey({ key = "f", mods = "ALT" }) },
+	{ key = "LeftArrow", mods = "CMD", action = act.SendKey({ key = "Home" }) },
+	{ key = "RightArrow", mods = "CMD", action = act.SendKey({ key = "End" }) },
+	{ key = "w", mods = "CMD|SHIFT", action = act.CloseCurrentTab({ confirm = false }) },
+	{ key = "w", mods = "CMD", action = act.CloseCurrentPane({ confirm = false }) },
+	{ key = "d", mods = "CMD|SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	{ key = "d", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "k", mods = "CMD", action = act.ClearScrollback("ScrollbackAndViewport") },
+	{ key = "p", mods = "CMD|SHIFT", action = act.ActivateCommandPalette },
+	{
+		key = "w",
+		mods = "CTRL|SHIFT",
+		action = act.DisableDefaultAssignment,
+	},
+	{
+		key = ",",
+		mods = "CMD",
+		action = act.SpawnCommandInNewTab({ cwd = wezterm.home_dir, args = { "vim", wezterm.config_file } }),
+	},
+	{
+		key = "Z",
+		mods = "CTRL",
+		action = act.TogglePaneZoomState,
+	},
+}
+
+return config
