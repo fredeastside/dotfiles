@@ -3,11 +3,11 @@ local config = wezterm.config_builder()
 local act = wezterm.action
 
 config.color_scheme = "tokyonight_night"
-config.font = wezterm.font("Fira Code")
 -- You can specify some parameters to influence the font selection;
 -- for example, this selects a Bold, Italic font variant.
-config.font = wezterm.font("FiraCode Nerd Font")
-config.font_size = 16.0
+config.font = wezterm.font("FiraCode Nerd Font Mono")
+--config.font = wezterm.font("SF-Mono-Nerd-Font")
+config.font_size = 18.0
 config.line_height = 1.3
 
 -- tab bar
