@@ -2,6 +2,8 @@ theme = "tokyonight"
 
 [editor]
 line-number = "relative"
+true-color = true
+cursorline = true
 
 [editor.cursor-shape]
 insert = "bar"
@@ -13,3 +15,13 @@ hidden = false
 
 [editor.soft-wrap]
 enable = true
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name"]
+right = ["diagnostics", "selections", "position", "file-type"]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.lsp]
+display-inlay-hints = true

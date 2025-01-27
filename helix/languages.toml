@@ -131,6 +131,7 @@ file-types = ["rs"]
 roots = ["Cargo.toml", "Cargo.lock"]
 shebangs = ["rust-script", "cargo"]
 auto-format = true
+formatter = { command = "rustfmt" }
 comment-tokens = ["//", "///", "//!"]
 block-comment-tokens = [
   { start = "/*", end = "*/" },
