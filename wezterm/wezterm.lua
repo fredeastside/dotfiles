@@ -39,21 +39,12 @@ config.keys = {
 	{ key = "d", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 	{ key = "k", mods = "CMD", action = act.ClearScrollback("ScrollbackAndViewport") },
 	{ key = "p", mods = "CMD|SHIFT", action = act.ActivateCommandPalette },
-	{
-		key = "w",
-		mods = "CTRL|SHIFT",
-		action = act.DisableDefaultAssignment,
-	},
-	{
-		key = ",",
-		mods = "CMD",
-		action = act.SpawnCommandInNewTab({ cwd = wezterm.home_dir, args = { "vim", wezterm.config_file } }),
-	},
-	{
-		key = "Z",
-		mods = "CTRL",
-		action = act.TogglePaneZoomState,
-	},
+	{ key = "w", mods = "CTRL|SHIFT", action = act.DisableDefaultAssignment },
+	{ key = ",", mods = "CMD", action = act.SpawnCommandInNewTab({ cwd = wezterm.home_dir, args = { "vim", wezterm.config_file } }) },
+	{ key = 'H', mods = 'CTRL', action = act.AdjustPaneSize { 'Left', 5 } },
+  { key = 'J', mods = 'CTRL', action = act.AdjustPaneSize { 'Down', 5 } },
+  { key = 'K', mods = 'CTRL', action = act.AdjustPaneSize { 'Up', 5 } },
+  { key = 'L', mods = 'CTRL', action = act.AdjustPaneSize { 'Right', 5 } },
 }
 
 return config
