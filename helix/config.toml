@@ -25,3 +25,6 @@ mode.select = "SELECT"
 
 [editor.lsp]
 display-inlay-hints = true
+
+[keys.normal]
+C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"]
