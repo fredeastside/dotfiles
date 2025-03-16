@@ -1,4 +1,4 @@
-theme = "tokyonight"
+theme = "mytheme"
 
 [editor]
 line-number = "relative"
@@ -17,7 +17,7 @@ hidden = false
 enable = true
 
 [editor.statusline]
-left = ["mode", "spinner", "file-name"]
+left = ["mode", "spinner", "version-control", "file-name"]
 right = ["diagnostics", "selections", "position", "file-type"]
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
