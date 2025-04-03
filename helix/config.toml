@@ -1,9 +1,18 @@
-theme = "mytheme"
+theme = "kanagawa"
 
 [editor]
 line-number = "relative"
 true-color = true
 cursorline = true
+auto-format = true
+
+[editor.indent-guides]
+render = true
+character = "╎" # Some characters that work well: "▏", "┆", "┊", "⸽"
+skip-levels = 1
+
+[editor.auto-save]
+focus-lost = true
 
 [editor.cursor-shape]
 insert = "bar"
@@ -24,6 +33,7 @@ mode.insert = "INSERT"
 mode.select = "SELECT"
 
 [editor.lsp]
+snippets = true
 display-inlay-hints = true
 
 [keys.normal]

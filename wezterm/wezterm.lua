@@ -2,7 +2,9 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local act = wezterm.action
 
-config.color_scheme = "tokyonight_night"
+--config.color_scheme = "tokyonight_night"
+--config.color_scheme = 'Kanagawa Dragon (Gogh)'
+config.color_scheme = 'Kanagawa (Gogh)'
 -- You can specify some parameters to influence the font selection;
 -- for example, this selects a Bold, Italic font variant.
 config.font = wezterm.font("FiraCode Nerd Font Mono")

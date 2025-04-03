@@ -116,12 +116,12 @@ source = { git = "https://github.com/omertuc/tree-sitter-go-work", rev = "6dd9dd
 command = "rust-analyzer"
 
 [language-server.rust-analyzer.config]
-# inlayHints.bindingModeHints.enable = false
-# inlayHints.closingBraceHints.minLines = 10
-# inlayHints.closureReturnTypeHints.enable = "with_block"
-# inlayHints.discriminantHints.enable = "fieldless"
-# inlayHints.lifetimeElisionHints.enable = "skip_trivial"
-# inlayHints.typeHints.hideClosureInitialization = false
+inlayHints.bindingModeHints.enable = false
+inlayHints.closingBraceHints.minLines = 10
+inlayHints.closureReturnTypeHints.enable = "with_block"
+inlayHints.discriminantHints.enable = "fieldless"
+inlayHints.lifetimeElisionHints.enable = "skip_trivial"
+inlayHints.typeHints.hideClosureInitialization = false
 
 [[language]]
 name = "rust"
