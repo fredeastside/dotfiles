@@ -122,6 +122,8 @@ inlayHints.closureReturnTypeHints.enable = "with_block"
 inlayHints.discriminantHints.enable = "fieldless"
 inlayHints.lifetimeElisionHints.enable = "skip_trivial"
 inlayHints.typeHints.hideClosureInitialization = false
+checkOnSave = { command = "clippy" }
+cargo = { allFeatures = true }
 
 [[language]]
 name = "rust"
