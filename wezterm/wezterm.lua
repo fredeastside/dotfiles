@@ -7,11 +7,13 @@ local act = wezterm.action
 config.color_scheme = 'Kanagawa (Gogh)'
 -- You can specify some parameters to influence the font selection;
 -- for example, this selects a Bold, Italic font variant.
-config.font = wezterm.font("Monaspace Argon Light")
+config.font = wezterm.font("0xProto Nerd Font")
+-- config.font = wezterm.font("Hurmit Nerd Font")
+-- config.font = wezterm.font("Monaspace Argon Light")
 -- config.font = wezterm.font("FiraCode Nerd Font Mono")
 --config.font = wezterm.font("SF-Mono-Nerd-Font")
 config.font_size = 18.0
-config.line_height = 1.5
+config.line_height = 1.2
 
 -- tab bar
 --config.enable_tab_bar = false
