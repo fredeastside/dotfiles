@@ -50,6 +50,18 @@ config.keys = {
   { key = 'J', mods = 'CTRL', action = act.AdjustPaneSize { 'Down', 5 } },
   { key = 'K', mods = 'CTRL', action = act.AdjustPaneSize { 'Up', 5 } },
   { key = 'L', mods = 'CTRL', action = act.AdjustPaneSize { 'Right', 5 } },
+	{
+    key = 'E',
+    mods = 'CTRL|SHIFT',
+    action = act.PromptInputLine {
+      description = 'Enter new name for tab',
+      action = wezterm.action_callback(function(window, pane, line)
+        if line then
+          window:active_tab():set_title(line)
+        end
+      end),
+    },
+  },
 }
 
 return config
