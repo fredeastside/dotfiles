@@ -50,6 +50,26 @@ config.keys = {
   { key = 'J', mods = 'CTRL', action = act.AdjustPaneSize { 'Down', 5 } },
   { key = 'K', mods = 'CTRL', action = act.AdjustPaneSize { 'Up', 5 } },
   { key = 'L', mods = 'CTRL', action = act.AdjustPaneSize { 'Right', 5 } },
+  {
+    key = 'h',
+    mods = 'CTRL',
+    action = act.ActivatePaneDirection 'Left',
+  },
+  {
+    key = 'l',
+    mods = 'CTRL',
+    action = act.ActivatePaneDirection 'Right',
+  },
+  {
+    key = 'k',
+    mods = 'CTRL',
+    action = act.ActivatePaneDirection 'Up',
+  },
+  {
+    key = 'j',
+    mods = 'CTRL',
+    action = act.ActivatePaneDirection 'Down',
+  },
 	{
     key = 'E',
     mods = 'CTRL|SHIFT',
