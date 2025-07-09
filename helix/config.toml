@@ -51,3 +51,5 @@ C-g = [
 "C-u" = ["half_page_up", "goto_window_center"]
 "{" = ["goto_prev_paragraph", "collapse_selection"]
 "}" = ["goto_next_paragraph", "collapse_selection"]
+X = "select_line_above"
+x = "select_line_below"
