@@ -3,7 +3,7 @@ theme = "kanagawa"
 [editor]
 line-number = "relative"
 true-color = true
-cursorline = true
+cursorline = false
 auto-format = true
 rulers = [80]
 
