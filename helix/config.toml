@@ -54,12 +54,12 @@ C-g = [
 "}" = ["goto_next_paragraph", "collapse_selection"]
 X = "select_line_above"
 x = "select_line_below"
-p = "paste_clipboard_after"
-P = "paste_clipboard_before"
-y = "yank_joined_to_clipboard"
-R = "replace_selections_with_clipboard"
+# p = "paste_clipboard_after"
+# P = "paste_clipboard_before"
+# y = "yank_joined_to_clipboard"
+# R = "replace_selections_with_clipboard"
 
-[keys.select]
-p = "replace_selections_with_clipboard"
-P = "no_op"
-y = "yank_joined_to_clipboard"
+# [keys.select]
+# p = "replace_selections_with_clipboard"
+# P = "no_op"
+# y = "yank_joined_to_clipboard"
