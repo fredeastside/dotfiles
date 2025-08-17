@@ -14,6 +14,11 @@ config.font = wezterm.font("0xProto Nerd Font")
 --config.font = wezterm.font("SF-Mono-Nerd-Font")
 config.font_size = 18.0
 config.line_height = 1.2
+config.inactive_pane_hsb = {
+    -- hue = 0.5,
+    saturation = 0.5,
+    brightness = 0.5,
+}
 
 -- tab bar
 --config.enable_tab_bar = false
