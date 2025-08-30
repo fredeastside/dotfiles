@@ -76,7 +76,7 @@ config.keys = {
     action = act.ActivatePaneDirection 'Down',
   },
 	{
-    key = 'E',
+    key = 'r',
     mods = 'CTRL|SHIFT',
     action = act.PromptInputLine {
       description = 'Enter new name for tab',
