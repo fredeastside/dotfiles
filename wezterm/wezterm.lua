@@ -87,6 +87,11 @@ config.keys = {
       end),
     },
   },
+  {
+    key = 'l',
+    mods = 'CMD',
+    action = act.ShowTabNavigator,
+  },
 }
 
 return config
