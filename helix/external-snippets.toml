@@ -1,3 +1,5 @@
+# cargo install --locked --git https://github.com/estin/simple-completion-language-server.git
+# simple-completion-language-server fetch-external-snippets
 [[sources]]
 name = "friendly-snippets"
 git = "https://github.com/rafamadriz/friendly-snippets.git"
