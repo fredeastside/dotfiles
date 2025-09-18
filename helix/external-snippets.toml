@@ -1,0 +1,27 @@
+[[sources]]
+name = "friendly-snippets"
+git = "https://github.com/rafamadriz/friendly-snippets.git"
+
+[[sources.paths]]
+scope = ["go"]
+path = "snippets/go.json"
+
+[[sources.paths]]
+scope = ["rust"]
+path = "snippets/rust/rust.json"
+
+[[sources.paths]]
+scope = ["rust"]
+path = "snippets/rust/rustdoc.json"
+
+[[sources.paths]]
+scope = ["ruby"]
+path = "snippets/ruby/ruby.json"
+
+[[sources.paths]]
+scope = ["ruby"]
+path = "snippets/ruby/rspec.json"
+
+[[sources.paths]]
+scope = ["ruby"]
+path = "snippets/ruby/rdoc.json"
