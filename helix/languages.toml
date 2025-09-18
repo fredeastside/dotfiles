@@ -245,3 +245,16 @@ indent = { tab-width = 2, unit = "  " }
 [[grammar]]
 name = "toml"
 source = { git = "https://github.com/ikatyang/tree-sitter-toml", rev = "7cff70bbcbbc62001b465603ca1ea88edd668704" }
+
+[[language]]
+name = "sql"
+scope = "source.sql"
+file-types = ["sql", "dsql"]
+comment-token = "--"
+block-comment-tokens = { start = "/*", end = "*/" }
+indent = { tab-width = 4, unit = "    " }
+injection-regex = "sql"
+
+[[grammar]]
+name = "sql"
+source = { git = "https://github.com/DerekStride/tree-sitter-sql", rev = "b9d109588d5b5ed986c857464830c2f0bef53f18" }

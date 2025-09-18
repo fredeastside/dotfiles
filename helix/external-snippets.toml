@@ -25,3 +25,7 @@ path = "snippets/ruby/rspec.json"
 [[sources.paths]]
 scope = ["ruby"]
 path = "snippets/ruby/rdoc.json"
+
+[[sources.paths]]
+scope = ["sql"]
+path = "snippets/sql.json"
