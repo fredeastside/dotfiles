@@ -257,6 +257,12 @@ comment-token = "--"
 block-comment-tokens = { start = "/*", end = "*/" }
 indent = { tab-width = 4, unit = "    " }
 injection-regex = "sql"
+# go install github.com/sqls-server/sqls@latest
+language-servers = [ "scls", "sqls" ]
+
+[language-server.sqls]
+command = "sqls"
+# args = ["-config", ".sqls.yml"]
 
 [[grammar]]
 name = "sql"
