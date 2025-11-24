@@ -267,3 +267,7 @@ command = "sqls"
 [[grammar]]
 name = "sql"
 source = { git = "https://github.com/DerekStride/tree-sitter-sql", rev = "b9d109588d5b5ed986c857464830c2f0bef53f18" }
+
+[[language]]
+name = "markdown"
+language-servers = [ "marksman" ]
