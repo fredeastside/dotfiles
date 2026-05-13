@@ -1,10 +1,18 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local act = wezterm.action
+local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 
 --config.color_scheme = "tokyonight_night"
 --config.color_scheme = 'Kanagawa Dragon (Gogh)'
 config.color_scheme = 'Kanagawa (Gogh)'
+
+tabline.setup({
+	options = {
+		theme = "Kanagawa (Gogh)",
+	},
+})
+tabline.apply_to_config(config)
 -- You can specify some parameters to influence the font selection;
 -- for example, this selects a Bold, Italic font variant.
 config.font = wezterm.font("0xProto Nerd Font")
