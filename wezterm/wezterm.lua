@@ -8,12 +8,32 @@ local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.
 --config.color_scheme = 'Kanagawa Dragon (Gogh)'
 config.color_scheme = 'Kanagawa (Gogh)'
 
+local function tab_label(_, tab)
+	if tab.tab_title and #tab.tab_title > 0 then
+		return tab.tab_title
+	end
+	local pane = tab.active_pane
+	local cwd = pane and pane.current_working_dir
+	if cwd then
+		local path = (cwd.file_path or tostring(cwd)):gsub("/$", "")
+		local parent, current = path:match("([^/]+)/([^/]+)$")
+		if parent and current then
+			return parent .. "/" .. current
+		end
+		return path:match("([^/]+)$") or path
+	end
+	local proc = pane and pane.foreground_process_name or ""
+	return proc:match("([^/\\]+)$") or "default"
+end
+
 tabline.setup({
 	options = {
 		theme = "Kanagawa (Gogh)",
 	},
 	sections = {
 		tabline_b = {},
+		tab_active = { "index", { "process", fmt = tab_label, padding = { left = 0, right = 1 } } },
+		tab_inactive = { "index", { "process", fmt = tab_label, padding = { left = 0, right = 1 } } },
 	},
 })
 tabline.apply_to_config(config)
