@@ -51,6 +51,16 @@ wezterm.on("gui-startup", function(cmd)
 	local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
 	window:gui_window():set_position(active.x, active.y)
 	window:gui_window():set_inner_size(active.width, active.height)
+
+	local ok, state = pcall(resurrect.state_manager.load_state, "default", "workspace")
+	if ok and state then
+		resurrect.workspace_state.restore_workspace(state, {
+			window = window,
+			relative = true,
+			restore_text = true,
+			on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+		})
+	end
 end)
 config.keys = {
 	{ key = "LeftArrow", mods = "OPT", action = act.SendKey({ key = "b", mods = "ALT" }) },
