@@ -2,6 +2,7 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local act = wezterm.action
 local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
+local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
 
 --config.color_scheme = "tokyonight_night"
 --config.color_scheme = 'Kanagawa Dragon (Gogh)'
@@ -11,8 +12,13 @@ tabline.setup({
 	options = {
 		theme = "Kanagawa (Gogh)",
 	},
+	sections = {
+		tabline_b = {},
+	},
 })
 tabline.apply_to_config(config)
+
+resurrect.state_manager.periodic_save({ interval_seconds = 15 * 60 })
 -- You can specify some parameters to influence the font selection;
 -- for example, this selects a Bold, Italic font variant.
 config.font = wezterm.font("0xProto Nerd Font")
@@ -99,6 +105,36 @@ config.keys = {
     key = 'l',
     mods = 'CMD',
     action = act.ShowTabNavigator,
+  },
+  {
+    key = 's',
+    mods = 'CMD|SHIFT',
+    action = wezterm.action_callback(function(win, pane)
+      resurrect.state_manager.save_state(resurrect.workspace_state.get_workspace_state())
+    end),
+  },
+  {
+    key = 'o',
+    mods = 'CMD|SHIFT',
+    action = wezterm.action_callback(function(win, pane)
+      resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id, label)
+        local type = string.match(id, "^([^/]+)")
+        id = string.match(id, "([^/]+)$"):gsub("%..+$", "")
+        if type == "workspace" then
+          local state = resurrect.state_manager.load_state(id, "workspace")
+          resurrect.workspace_state.restore_workspace(state, { relative = true, restore_text = true })
+        end
+      end)
+    end),
+  },
+  {
+    key = 'x',
+    mods = 'CMD|SHIFT',
+    action = wezterm.action_callback(function(win, pane)
+      resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id)
+        resurrect.state_manager.delete_state(id)
+      end, { title = "Delete State" })
+    end),
   },
 }
 
