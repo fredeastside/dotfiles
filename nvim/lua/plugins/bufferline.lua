@@ -1,0 +1,35 @@
+return {}
+-- return {
+--   'akinsho/bufferline.nvim',
+--   dependencies = { 'nvim-tree/nvim-web-devicons' },
+--   version = '*',
+--   opts = {
+--     options = {
+--       mode = 'tabs',
+--       separator_style = 'slant',
+--     },
+--   },
+--   -- opts = {
+--   --   options = {
+--   --     mode = 'tabs',
+--   --     separator_style = 'slant',
+--   --     hover = {
+--   --       enabled = true,
+--   --       delay = 150,
+--   --       reveal = { 'close' },
+--   --     },
+--   --   },
+--   -- },
+--   -- config = function()
+--   --   vim.opt.termguicolors = true
+--   -- end,
+--   offsets = {
+--     {
+--       filetype = 'NvimTree',
+--       text = 'File Explorer',
+--       highlight = 'Directory',
+--       separator = true,
+--       text_align = 'left',
+--     },
+--   },
+-- }
