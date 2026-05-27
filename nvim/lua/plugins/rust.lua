@@ -1,7 +1,7 @@
 return {
   {
     'mrcjkb/rustaceanvim',
-    version = '^5', -- Recommended
+    version = '^8',
     lazy = false, -- This plugin is already lazy
     ft = 'rust',
     config = function()
@@ -92,7 +92,7 @@ return {
                 ['end'] = { line = vim.api.nvim_buf_line_count(args.buf), character = 0 },
               },
             }
-            local result = client.request_sync('textDocument/codeAction', params, 3000, args.buf)
+            local result = client:request_sync('textDocument/codeAction', params, 3000, args.buf)
             if result and result.result then
               local all_edits = {}
               for _, action in ipairs(result.result) do
@@ -131,7 +131,7 @@ return {
                 ['end'] = { line = vim.api.nvim_buf_line_count(args.buf), character = 0 },
               },
             }
-            local fix_result = client.request_sync('textDocument/codeAction', fix_params, 3000, args.buf)
+            local fix_result = client:request_sync('textDocument/codeAction', fix_params, 3000, args.buf)
             if fix_result and fix_result.result then
               local all_edits = {}
               for _, action in ipairs(fix_result.result) do
