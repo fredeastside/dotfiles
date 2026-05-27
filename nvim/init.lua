@@ -344,6 +344,16 @@ require('lazy').setup({
     end,
   },
 
+  { -- Lua LSP support for the Neovim config itself (replaces archived neodev)
+    'folke/lazydev.nvim',
+    ft = 'lua',
+    opts = {
+      library = {
+        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+      },
+    },
+  },
+
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -355,10 +365,6 @@ require('lazy').setup({
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
-
-      -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
-      -- used for completion, annotations and signatures of Neovim apis
-      { 'folke/neodev.nvim', opts = {} },
     },
     config = function()
       -- Brief Aside: **What is LSP?**
@@ -607,6 +613,7 @@ require('lazy').setup({
           ['<C-Space>'] = cmp.mapping.complete {},
         },
         sources = {
+          { name = 'lazydev', group_index = 0 },
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
