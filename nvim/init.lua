@@ -510,6 +510,9 @@ require('lazy').setup({
       -- via automatic_enable (default true), so no handlers block is needed.
       require('mason-lspconfig').setup {
         ensure_installed = vim.tbl_keys(servers),
+        -- rustaceanvim manages rust-analyzer itself; auto-enabling it here
+        -- would start a second instance and duplicate LSP responses.
+        automatic_enable = { exclude = { 'rust_analyzer' } },
       }
     end,
   },
