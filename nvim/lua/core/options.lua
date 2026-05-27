@@ -1,14 +1,5 @@
 vim.cmd 'let g:netrw_liststyle = 3'
 
--- Suppress position_encoding deprecation warnings from telescope
-local orig_notify = vim.notify
-vim.notify = function(msg, ...)
-  if type(msg) == 'string' and (msg:match 'position_encoding' or msg:match 'offset_encoding') then
-    return
-  end
-  return orig_notify(msg, ...)
-end
-
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!

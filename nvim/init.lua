@@ -207,12 +207,12 @@ require('lazy').setup({
       require('which-key').add {
         {
           '<leader>d',
-          name = '[D]ocument',
+          group = '[D]ocument',
           hidden = true,
         },
         {
           '<leader>r',
-          name = '[R]ename',
+          group = '[R]ename',
           hidden = true,
         },
         {
@@ -221,7 +221,7 @@ require('lazy').setup({
         },
         {
           '<leader>w',
-          name = '[W]orkspace',
+          group = '[W]orkspace',
           hidden = true,
         },
       }
