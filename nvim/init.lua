@@ -660,6 +660,83 @@ require('lazy').setup({
 
       -- require('mini.pairs').setup()
 
+      -- Start screen ("fancy pic") shown when opening nvim with no file.
+      -- One rounded border wraps the whole dashboard (logo + menu), every
+      -- line is centered inside it, and recent files are from the cwd.
+      -- Edit the `logo` lines to change the art.
+      local starter = require 'mini.starter'
+      local logo = {
+        '███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗',
+        '████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║',
+        '██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║',
+        '██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║',
+        '██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║',
+        '╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝',
+      }
+
+      -- content_hook: draw a single rounded border around ALL content and
+      -- center every line within it (sized to the widest line).
+      local function bordering(pad, vpad)
+        pad = pad or 4
+        vpad = vpad or 1
+        return function(content, _)
+          local lines = starter.content_to_lines(content)
+          local w = 0
+          for _, l in ipairs(lines) do
+            w = math.max(w, vim.fn.strdisplaywidth(l))
+          end
+          local function rule(left, right)
+            return { { string = left .. string.rep('─', w + pad * 2) .. right, type = 'border' } }
+          end
+          local function blank()
+            return { { string = '│' .. string.rep(' ', w + pad * 2) .. '│', type = 'border' } }
+          end
+          local boxed = { rule('╭', '╮') }
+          for _ = 1, vpad do
+            table.insert(boxed, blank())
+          end
+          for i, line in ipairs(content) do
+            -- Center only the logo (header) lines; left-align the menu.
+            local is_header = false
+            for _, unit in ipairs(line) do
+              if unit.type == 'header' then
+                is_header = true
+                break
+              end
+            end
+            local extra = w - vim.fn.strdisplaywidth(lines[i])
+            local lp = is_header and math.floor(extra / 2) or 0
+            local new_line = { { string = '│' .. string.rep(' ', pad + lp), type = 'border' } }
+            for _, unit in ipairs(line) do
+              table.insert(new_line, unit)
+            end
+            table.insert(new_line, { string = string.rep(' ', extra - lp + pad) .. '│', type = 'border' })
+            table.insert(boxed, new_line)
+          end
+          for _ = 1, vpad do
+            table.insert(boxed, blank())
+          end
+          table.insert(boxed, rule('╰', '╯'))
+          return boxed
+        end
+      end
+
+      starter.setup {
+        header = table.concat(logo, '\n'),
+        footer = '',
+        items = {
+          starter.sections.builtin_actions(),
+          -- (n, current_dir=true -> only cwd, show_path=false -> filename only)
+          starter.sections.recent_files(5, true, false),
+        },
+        content_hooks = {
+          starter.gen_hook.adding_bullet(),
+          -- bordering(horizontal_padding, vertical_padding)
+          bordering(4, 1),
+          starter.gen_hook.aligning('center', 'center'),
+        },
+      }
+
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
