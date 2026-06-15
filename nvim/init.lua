@@ -480,7 +480,15 @@ require('lazy').setup({
       --  See `:help lspconfig-all` for the full list of pre-configured servers.
       local servers = {
         buf_ls = {},
-        gopls = {},
+        gopls = {
+          settings = {
+            gopls = {
+              -- Surface known vulnerabilities as diagnostics in go.mod,
+              -- based on the module's imports (govulncheck DB).
+              vulncheck = 'Imports',
+            },
+          },
+        },
         golangci_lint_ls = {},
         sqls = {},
         lua_ls = {
