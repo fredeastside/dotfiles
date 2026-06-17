@@ -486,6 +486,53 @@ require('lazy').setup({
               -- Surface known vulnerabilities as diagnostics in go.mod,
               -- based on the module's imports (govulncheck DB).
               vulncheck = 'Imports',
+
+              -- Extra static analyzers (beyond the default suite).
+              -- staticcheck is intentionally omitted: golangci_lint_ls runs
+              -- golangci-lint, whose default linters include staticcheck, so
+              -- enabling it here would duplicate diagnostics.
+              analyses = {
+                unusedparams = true, -- unused function parameters
+                unusedwrite = true, -- writes whose value is never read
+                shadow = true, -- shadowed variables
+                nilness = true, -- redundant nil checks / nil derefs
+                useany = true, -- suggest `any` over `interface{}`
+                unusedvariable = true, -- unused variables
+                -- fieldalignment = true, -- struct padding hints (noisy; opt in)
+              },
+
+              -- Inlay hints. Show with vim.lsp.inlay_hint.enable(true).
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+              },
+
+              -- Completion quality.
+              usePlaceholders = true, -- fill call args as snippets
+              completeUnimported = true, -- complete + auto-import packages
+              matcher = 'Fuzzy',
+
+              -- Gutter code lenses (run/test/generate/tidy/upgrade).
+              codelenses = {
+                generate = true,
+                gc_details = true,
+                test = true,
+                tidy = true,
+                upgrade_dependency = true,
+                regenerate_cgo = true,
+                vendor = true,
+              },
+
+              -- gopls formats Go on save (conform has no Go formatter and
+              -- falls back to the LSP); gofumpt applies its stricter rules.
+              gofumpt = true,
+              semanticTokens = true,
+              directoryFilters = { '-.git', '-node_modules' },
             },
           },
         },
