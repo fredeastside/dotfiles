@@ -715,6 +715,10 @@ require('lazy').setup({
 
       -- require('mini.pairs').setup()
 
+      -- Session management. Powers the "Sessions" section on the start screen
+      -- (resume work per project). :lua MiniSessions.write('name') to save.
+      require('mini.sessions').setup()
+
       -- Start screen ("fancy pic") shown when opening nvim with no file.
       -- One rounded border wraps the whole dashboard (logo + menu), every
       -- line is centered inside it, and recent files are from the cwd.
@@ -777,12 +781,30 @@ require('lazy').setup({
       end
 
       starter.setup {
+        -- Auto-run an item the moment the typed query matches exactly one.
+        evaluate_single = true,
         header = table.concat(logo, '\n'),
-        footer = '',
+        -- Show plugin count + startup time once Lazy has measured it.
+        footer = function()
+          local ok, lazy = pcall(require, 'lazy')
+          if not ok then
+            return ''
+          end
+          local stats = lazy.stats()
+          return ('⚡ %d plugins loaded in %.0f ms'):format(stats.loaded, stats.startuptime)
+        end,
         items = {
-          starter.sections.builtin_actions(),
+          -- Quick launchers (Telescope + plugin/config managers).
+          { section = 'Search', name = 'Find file', action = 'Telescope find_files' },
+          { section = 'Search', name = 'Live grep', action = 'Telescope live_grep' },
+          { section = 'Config', name = 'Edit config', action = 'edit $MYVIMRC' },
+          { section = 'Config', name = 'Plugins (Lazy)', action = 'Lazy' },
+          { section = 'Config', name = 'Mason', action = 'Mason' },
+          -- Resume a saved session (most recent first).
+          starter.sections.sessions(5, true),
           -- (n, current_dir=true -> only cwd, show_path=false -> filename only)
           starter.sections.recent_files(5, true, false),
+          starter.sections.builtin_actions(),
         },
         content_hooks = {
           starter.gen_hook.adding_bullet(),
