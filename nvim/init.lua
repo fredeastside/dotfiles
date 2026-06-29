@@ -804,7 +804,9 @@ require('lazy').setup({
           starter.sections.sessions(5, true),
           -- (n, current_dir=true -> only cwd, show_path=false -> filename only)
           starter.sections.recent_files(5, true, false),
-          starter.sections.builtin_actions(),
+          -- builtin_actions() but with "Edit new buffer" renamed to "New buffer".
+          { section = 'Builtin actions', name = 'New buffer', action = 'enew' },
+          { section = 'Builtin actions', name = 'Quit Neovim', action = 'qall' },
         },
         content_hooks = {
           starter.gen_hook.adding_bullet(),
