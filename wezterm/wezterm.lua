@@ -41,13 +41,19 @@ tabline.apply_to_config(config)
 resurrect.state_manager.periodic_save({ interval_seconds = 15 * 60 })
 -- You can specify some parameters to influence the font selection;
 -- for example, this selects a Bold, Italic font variant.
-config.font = wezterm.font("0xProto Nerd Font")
+config.font = wezterm.font("0xProto Nerd Font", {
+	-- harfbuzz_features = { "calt=0", "clig=0", "liga=0" }, -- uncomment to disable ligatures
+})
 -- config.font = wezterm.font("Hurmit Nerd Font")
 -- config.font = wezterm.font("Monaspace Argon Light")
 -- config.font = wezterm.font("FiraCode Nerd Font Mono")
 --config.font = wezterm.font("SF-Mono-Nerd-Font")
 config.font_size = 19.0
 config.line_height = 1.2
+
+config.front_end = "WebGpu"
+config.scrollback_lines = 10000
+config.audible_bell = "Disabled"
 config.inactive_pane_hsb = {
     -- hue = 0.5,
     saturation = 0.5,
@@ -93,7 +99,6 @@ config.keys = {
 	{ key = "d", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 	{ key = "k", mods = "CMD", action = act.ClearScrollback("ScrollbackAndViewport") },
 	{ key = "p", mods = "CMD|SHIFT", action = act.ActivateCommandPalette },
-	{ key = "w", mods = "CTRL|SHIFT", action = act.DisableDefaultAssignment },
 	{ key = ",", mods = "CMD", action = act.SpawnCommandInNewTab({ cwd = wezterm.home_dir, args = { "vim", wezterm.config_file } }) },
 	{ key = 'H', mods = 'CTRL', action = act.AdjustPaneSize { 'Left', 5 } },
   { key = 'J', mods = 'CTRL', action = act.AdjustPaneSize { 'Down', 5 } },
