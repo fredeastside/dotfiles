@@ -3,6 +3,7 @@ local config = wezterm.config_builder()
 local act = wezterm.action
 local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
+local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 
 --config.color_scheme = "tokyonight_night"
 --config.color_scheme = 'Kanagawa Dragon (Gogh)'
@@ -100,30 +101,8 @@ config.keys = {
 	{ key = "k", mods = "CMD", action = act.ClearScrollback("ScrollbackAndViewport") },
 	{ key = "p", mods = "CMD|SHIFT", action = act.ActivateCommandPalette },
 	{ key = ",", mods = "CMD", action = act.SpawnCommandInNewTab({ cwd = wezterm.home_dir, args = { "vim", wezterm.config_file } }) },
-	{ key = 'H', mods = 'CTRL', action = act.AdjustPaneSize { 'Left', 5 } },
-  { key = 'J', mods = 'CTRL', action = act.AdjustPaneSize { 'Down', 5 } },
-  { key = 'K', mods = 'CTRL', action = act.AdjustPaneSize { 'Up', 5 } },
-  { key = 'L', mods = 'CTRL', action = act.AdjustPaneSize { 'Right', 5 } },
-  {
-    key = 'h',
-    mods = 'CTRL',
-    action = act.ActivatePaneDirection 'Left',
-  },
-  {
-    key = 'l',
-    mods = 'CTRL',
-    action = act.ActivatePaneDirection 'Right',
-  },
-  {
-    key = 'k',
-    mods = 'CTRL',
-    action = act.ActivatePaneDirection 'Up',
-  },
-  {
-    key = 'j',
-    mods = 'CTRL',
-    action = act.ActivatePaneDirection 'Down',
-  },
+	-- NOTE: CTRL+hjkl (move) and META+hjkl (resize) are registered by
+	-- smart_splits.apply_to_config below; they hand off to Neovim splits when nvim is focused.
 	{
     key = 'r',
     mods = 'CTRL|SHIFT',
@@ -172,5 +151,15 @@ config.keys = {
     end),
   },
 }
+
+-- smart-splits: CTRL+hjkl to move between Neovim splits AND WezTerm panes,
+-- META(Option)+hjkl to resize. Routes the key into Neovim when it's the
+-- focused process (detected via the IS_NVIM user var), otherwise acts on panes.
+smart_splits.apply_to_config(config, {
+	modifiers = {
+		move = "CTRL",
+		resize = "META",
+	},
+})
 
 return config
