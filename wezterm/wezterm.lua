@@ -116,9 +116,35 @@ config.keys = {
     },
   },
   {
+    -- Fuzzy-search open tabs by title, then jump to the match.
     key = 'l',
     mods = 'CMD',
-    action = act.ShowTabNavigator,
+    action = wezterm.action_callback(function(window, pane)
+      local choices = {}
+      for i, tab in ipairs(window:mux_window():tabs()) do
+        local title = tab:get_title()
+        if not title or #title == 0 then
+          title = tab:active_pane():get_title()
+        end
+        table.insert(choices, {
+          id = tostring(i - 1), -- 0-based index for ActivateTab
+          label = string.format('%d: %s', i, title),
+        })
+      end
+      window:perform_action(
+        act.InputSelector({
+          title = 'Search tabs',
+          fuzzy = true,
+          choices = choices,
+          action = wezterm.action_callback(function(win, p, id)
+            if id then
+              win:perform_action(act.ActivateTab({ arg = tonumber(id) }), p)
+            end
+          end),
+        }),
+        pane
+      )
+    end),
   },
   {
     key = 's',
