@@ -179,6 +179,16 @@ require('lazy').setup({
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
+      on_attach = function(bufnr)
+        local gs = require 'gitsigns'
+        local function map(l, r, desc)
+          vim.keymap.set('n', l, r, { buffer = bufnr, desc = desc })
+        end
+        map('<leader>gb', function()
+          gs.blame_line { full = true }
+        end, 'Git [b]lame line')
+        map('<leader>gB', gs.toggle_current_line_blame, 'Toggle line [B]lame')
+      end,
     },
   },
 
@@ -218,6 +228,10 @@ require('lazy').setup({
         {
           '<leader>f',
           group = '[F]ind',
+        },
+        {
+          '<leader>g',
+          group = '[G]it',
         },
         {
           '<leader>w',
