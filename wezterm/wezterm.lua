@@ -5,6 +5,10 @@ local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabl
 local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 
+-- Store resurrect state outside the plugin folder so plugin auto-updates can't
+-- wipe saved sessions. The workspace/window/tab subdirs must already exist.
+resurrect.state_manager.change_state_save_dir(wezterm.home_dir .. "/.local/share/wezterm/resurrect/")
+
 --config.color_scheme = "tokyonight_night"
 --config.color_scheme = 'Kanagawa Dragon (Gogh)'
 config.color_scheme = 'Kanagawa (Gogh)'
@@ -39,7 +43,22 @@ tabline.setup({
 })
 tabline.apply_to_config(config)
 
-resurrect.state_manager.periodic_save({ interval_seconds = 15 * 60 })
+-- NOTE: resurrect's periodic_save (wezterm.time.call_after) does not reliably
+-- fire when scheduled from config top-level, so nothing ever got saved. Instead
+-- drive saves off update-status (fires ~every 1s regardless of focus), throttled
+-- to every 2 minutes via os.time().
+local resurrect_last_save = 0
+wezterm.on("update-status", function(window, pane)
+	local now = os.time()
+	if now - resurrect_last_save < 120 then
+		return
+	end
+	resurrect_last_save = now
+	local ok, state = pcall(resurrect.workspace_state.get_workspace_state)
+	if ok and state then
+		resurrect.state_manager.save_state(state)
+	end
+end)
 -- You can specify some parameters to influence the font selection;
 -- for example, this selects a Bold, Italic font variant.
 config.font = wezterm.font("0xProto Nerd Font", {
@@ -120,14 +139,15 @@ config.keys = {
     key = 'l',
     mods = 'CMD',
     action = wezterm.action_callback(function(window, pane)
+      local tabs = window:mux_window():tabs()
       local choices = {}
-      for i, tab in ipairs(window:mux_window():tabs()) do
+      for i, tab in ipairs(tabs) do
         local title = tab:get_title()
         if not title or #title == 0 then
           title = tab:active_pane():get_title()
         end
         table.insert(choices, {
-          id = tostring(i - 1), -- 0-based index for ActivateTab
+          id = tostring(i), -- 1-based index into `tabs`
           label = string.format('%d: %s', i, title),
         })
       end
@@ -136,9 +156,12 @@ config.keys = {
           title = 'Search tabs',
           fuzzy = true,
           choices = choices,
+          -- Activate the mux tab object directly. Performing ActivateTab here
+          -- races with the InputSelector overlay teardown (which refocuses the
+          -- original tab), so the selection would not stick.
           action = wezterm.action_callback(function(win, p, id)
             if id then
-              win:perform_action(act.ActivateTab({ arg = tonumber(id) }), p)
+              tabs[tonumber(id)]:activate()
             end
           end),
         }),
